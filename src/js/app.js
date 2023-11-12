@@ -22,30 +22,59 @@ import "../style/index.css";
         city: null
     }
  */
+
 function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
+
+  // Cover Output
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
-  // reset the website body with the new html output
+  // HTML Output
+  document.querySelector("#widget_content").innerHTML = widgetHTML;
 
-  document.querySelector("#widget_content").innerHTML = `<div class="widget">
-            ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>${variables.name} ${variables.lastName}</h1>
-          <h2>${variables.role}</h2>
-          <h3>${variables.city}</h3>
-          <h3>${variables.country}</h3>
-          <ul class="${variables.socialMediaPosition}">
-            <li><a href="https://twitter.com/alesanchezr"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="https://github.com/alesanchezr"><i class="fa fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/alesanchezr"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/alesanchezr"><i class="fa fa-instagram"></i></a></li>
-          </ul>
-        </div>
-    `;
+  // Constructed Social Media Render Links
+  let socialMediaLinks = `
+  <ul class="${variables.socialMediaPosition}">
+    ${
+      variables.twitter
+        ? `<li><a href="https://twitter.com/${variables.twitter}"><i class="fa fa-twitter"></i></a></li>`
+        : ""
+    }
+    ${
+      variables.github
+        ? `<li><a href="https://github.com/${variables.github}"><i class="fa fa-github"></i></a></li>`
+        : ""
+    }
+    ${
+      variables.linkedin
+        ? `<li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fa fa-linkedin"></i></a></li>`
+        : ""
+    }
+    ${
+      variables.instagram
+        ? `<li><a href="https://instagram.com/${variables.instagram}"><i class="fa fa-instagram"></i></a></li>`
+        : ""
+    }
+  </ul>
+`;
+
+  // Constructed Widget Render Links
+  let widgetHTML = `
+  <div class="widget">
+    ${cover}
+    <img src="${variables.avatarURL}" class="photo" />
+    <h1>${variables.name} ${variables.lastName}</h1>
+    <h2>${variables.role}</h2>
+    <h3>${variables.city}</h3>
+    <h3>${variables.country}</h3>
+    ${socialMediaLinks}
+  </div>
+`;
+
+  document.querySelector("#widget_content").innerHTML = widgetHTML;
 }
 
 /**
